@@ -1,5 +1,5 @@
 export interface ISpeciality {
-    id: number,
+    idSpeciality: number,
     name: string,
     physician: string
 }

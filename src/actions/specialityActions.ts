@@ -4,14 +4,16 @@ const API = 'http://localhost:8080/api/v1/speciality/';
 
 export async function getAllSpecialties() {
     const response:Response = await fetch(API + "list");
-    const dataApi:ISpeciality[] = await response.json();
-    return dataApi;
+    const dataApi = await response.json();
+    const data:ISpeciality[] = dataApi.data;
+    return data;
 }
 
 export async function getSpeciality(id:number) {
     const response:Response = await fetch(API + id);
-    const dataApi:ISpeciality = await response.json();
-    return dataApi;
+    const dataApi = await response.json();
+    const data:ISpeciality = dataApi.data;
+    return data;
 }
 
 export async function createSpeciality(speciality:ISpeciality){

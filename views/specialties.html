@@ -8,20 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
+    <script type="module" src="../dist/speciality.js"></script>
     <title>Specialties</title>
 </head>
-<body>
+<body onload="getSpecialtiesList()">
     <header class="header-go-back">
         <a href="../index.html"><span></span></a>
     </header>
     <main class="main-specialties">
         <h2>Specialties</h2>
         <div class="main-specialties-section">
-            <section class="specialties-list">
-                <a href="./speciality.html">Nutrition</a>
-                <a href="./speciality.html">Nutrition</a>
-                <a href="./speciality.html">Nutrition</a>
-                <a href="./speciality.html">Nutrition</a>
+            <section class="specialties-list" id="specialties-list">
             </section>
             <section class="specialties-add">
                 <button>Add new speciality</button>
