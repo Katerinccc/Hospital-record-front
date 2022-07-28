@@ -1,0 +1,71 @@
+:root{
+    --green: #99D420;
+    --blue: #0994DC;
+    --grey: #504f4f;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+.main-home{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-logo{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.home-logo img{
+    height: 50vh;
+}
+
+.home-sections{
+    height: 14vh;
+    width: 700px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.home-sections a{
+    width: 250px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blue);
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 20px;
+    color: white;
+    font-size: 3.8rem;
+}
+
+footer{
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+}
+
+footer a{
+    color: var(--blue);
+    margin-left: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2.3rem;
+}
