@@ -19,14 +19,25 @@
         <section class="section-go-back">
             <a href="./specialties.html"><span><p>Return</p></span></a>  
         </section>
-        <section class="speciality">
-            <h2>Speciality detail:</h2>
-            <section id="speciality"></section>
-            <section class="speciality-actions">
-                <a href="/views/updateSpeciality.html" id="updatePage">Update</a>
-                <a href="" onclick="">Delete</a>
-            </section>
-            <section id="deletedSpeciality"></section>
+        <section class="update-speciality">
+            <h3>Update Speciality:</h3>
+            <form id="formUpdate" method="PUT" class="form-update-speciality">
+                <ul>
+                    <li>
+                        <label for="name">Edit speciality name*: </label>
+                        <input type="text" id="name" name="name" required autocomplete="off">
+                    </li>
+                    <li>
+                        <label for="physician">Edit physician in charge: </label>
+                        <input type="physician" id="physician" name="physician" autocomplete="off">
+                    </li>
+                    <li>
+                        <button type="submit" id="submit">SUBMIT</button>
+                        <button type="reset" id="reset">RESET</button>
+                    </li>
+                </ul>
+            </form>
+            <p id="message"></p>
         </section>
     </main>
 </body>

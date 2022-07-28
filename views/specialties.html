@@ -22,6 +22,27 @@
             </section>
             <section class="specialties-add">
                 <button>Add new speciality</button>
+                <section class="display-none create-speciality">
+                    <h3>Add a new speciality:</h3>
+                    <form id="formCreate" method="POST" class="form-create-speciality">
+                        <ul>
+                            <li>
+                                <label for="name">*Enter speciality name: </label>
+                                <input type="text" id="name" name="name" required autocomplete="off">
+                            </li>
+                            <li>
+                                <label for="physician">*Enter physician in charge: </label>
+                                <input type="physician" id="physician" name="physician" autocomplete="off">
+                            </li>
+                            <li>
+                                <button type="submit" id="submit">SUBMIT</button>
+                                <button type="reset" id="reset">RESET</button>
+                            </li>
+                        </ul>
+                        <p><i>*field is required</i></p>
+                    </form>
+                    <section id="message"></section>
+                </section>
             </section>
         </div>
     </main>
