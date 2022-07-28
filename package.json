@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Katerin Calderon",
+  "license": "IBM",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  }
+}
