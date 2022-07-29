@@ -41,9 +41,9 @@
             <section id="addAppointment" class="display-none add-appointment">
                 <button id="addNewAppointment" type="button" onclick="addNewAppointmentCurrentPatient()">Add new Appointment to current patient</button>
             </section>
-            <section class="create-patient-form" id="createPatientForm">
+            <section class="display-none create-patient-form" id="createPatientForm">
                 <h3>Register new patient appointment:</h3>
-                <form action="">
+                <form id="formCreatePatient" action="">
                     <ul>
                         <li>
                             <label for="name">Enter patient name: </label>
@@ -58,11 +58,12 @@
                             <input type="number" id="age" name="age" required autocomplete="off">
                         </li>
                         <li>
-                            <button type="submit" id="createSpeciality">SUBMIT</button>
+                            <button type="submit" id="createSpeciality" onclick="createNewPatient()">SUBMIT</button>
                             <button type="reset" id="reset">RESET</button>
                         </li>
                     </ul>
                 </form>
+                <section id="messagePatient" class="messageCreate"></section>
             </section>
         </section>
     </main>

@@ -1,5 +1,6 @@
 export interface IPatient {
-    speciality: object,
+    idPatient: number | null,
+    idSpeciality: number,
     name: string,
     identification: number,
     age: number

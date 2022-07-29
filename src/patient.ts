@@ -1,3 +1,4 @@
+import { IPatient } from './models/IPatient';
 import { IIdPatient } from './models/IIdPatient';
 import { createPatient, 
     addNewAppointment, 
@@ -12,10 +13,12 @@ declare global {
     interface Window {
         mainPatient:any;
         addNewAppointmentCurrentPatient:any
+        createNewPatient:any
     }
 }
 window.mainPatient = mainPatient;
 window.addNewAppointmentCurrentPatient = addNewAppointmentCurrentPatient;
+window.createNewPatient = createNewPatient;
 
 
 function mainPatient(){
@@ -98,6 +101,45 @@ function addNewAppointmentCurrentPatient(){
     })
 }
 
+async function createNewPatient(){ 
+    const form = document.getElementById('formCreatePatient') as HTMLFormElement;
+
+    form.onsubmit = async function (event){
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        const selectValue = document.getElementById('specialitySelect') as HTMLSelectElement;
+        let specialityId:number = Number(selectValue.value);
+        
+        let newPatient:IPatient = {
+            idPatient: null,
+            idSpeciality: specialityId,
+            name: formData.get('name') as string,
+            identification: Number(formData.get('newIdentification')),
+            age: Number(formData.get('age'))
+        }
+
+        createPatient(newPatient)
+        .then(response => {
+            if(response.status !== 201){
+                throw Error(response.status.toString());
+            }
+            return response.json();
+        })
+        .then(patientResponse => {
+            const patient:IPatient = patientResponse.data;
+            const resetButton = document.getElementById("reset") as HTMLButtonElement;
+            resetButton.click();
+            const message = document.getElementById("messagePatient") as HTMLTableSectionElement;
+            message.innerHTML = "";
+            let p = document.createElement("p");  
+            p.innerHTML = "Patient " + patient.name + " created successfully.";
+            message.appendChild(p);
+        })
+    }
+}
+
 function displayCreatePatient(){
     const createPatient = document.getElementById('createPatient') as HTMLButtonElement;
     createPatient.classList.remove('display-none');
@@ -106,6 +148,11 @@ function displayCreatePatient(){
 function displayAddNewAppointmentButton(){
     const addAppointment = document.getElementById('addAppointment') as HTMLButtonElement;
     addAppointment.classList.remove('display-none');
+}
+
+function displayCreatePatientForm(){
+    const display = document.getElementById('createPatientForm') as HTMLTableSectionElement;
+    display.classList.remove('display-none');
 }
 
 function hideAddNewAppointmentButton(){
