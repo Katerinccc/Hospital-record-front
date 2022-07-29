@@ -223,7 +223,7 @@ html{
 
 .form-create-speciality input, .form-update-speciality input{
     width: 200px;
-    height: 20px;
+    height: 25px;
     font-size: 1.8rem;
 }
 

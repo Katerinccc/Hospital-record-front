@@ -11,17 +11,16 @@
     <script type="module" src="../dist/speciality.js"></script>
     <title>Specialties</title>
 </head>
-<body onload="getSpecialtiesList()">
+<body onload="mainSpecialties()">
     <header class="header-go-back">
         <a href="../index.html"><span></span></a>
     </header>
     <main class="main-specialties">
         <h2>Specialties</h2>
         <div class="main-specialties-section">
-            <section class="specialties-list" id="specialties-list">
-            </section>
+            <section class="specialties-list" id="specialties-list"></section>
             <section class="specialties-add">
-                <button>Add new speciality</button>
+                <button id="createButton">Add new speciality</button>
                 <section class="display-none create-speciality">
                     <h3>Add a new speciality:</h3>
                     <form id="formCreate" method="POST" class="form-create-speciality">
@@ -35,13 +34,13 @@
                                 <input type="physician" id="physician" name="physician" autocomplete="off">
                             </li>
                             <li>
-                                <button type="submit" id="submit">SUBMIT</button>
+                                <button type="submit" id="createSpeciality">SUBMIT</button>
                                 <button type="reset" id="reset">RESET</button>
                             </li>
                         </ul>
                         <p><i>*field is required</i></p>
                     </form>
-                    <section id="message"></section>
+                    <section id="messageCreate"></section>
                 </section>
             </section>
         </div>
