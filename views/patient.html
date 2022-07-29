@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
+    <script type="module" src="../dist/patient.js"></script>
+    <title>StClaire Hospital</title>
+</head>
+<body onload="mainPatient()">
+    <header class="header-go-back">
+        <a href="../index.html"><span></span></a>
+    </header>
+    <main>
+        <section class="section-go-back">
+            <a href="./specialties.html"><span><p>Return</p></span></a>  
+        </section>
+        <section class="patient-search">
+            <form id="formSearch" method="GET">
+                <ul>
+                    <select id="specialitySelect">
+                        <option>Select speciality...</option>
+                    </select>
+                    <li>
+                        <label for="identification">Enter patient identification number: </label>
+                        <input type="text" id="identification" name="identification" required autocomplete="off">
+                    </li>
+                    <button type="submit" id="searchPatient">SEARCH</button>
+                </ul>
+            </form>
+        </section>
+        <section class="patient-actions">
+            <p id="messageResult"></p>
+            <section id="createPatient" class="display-none create-patient">
+                <button>Create new Patient</button>
+            </section>
+            <section id="addAppointment" class="display-none add-appointment">
+                <button>Add new Appointment to current patient</button>
+            </section>
+        </section>
+    </main>
+</body>
+</html>

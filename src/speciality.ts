@@ -40,7 +40,7 @@ function mainUpdate(){
     updateExistentSpeciality();
 }
 
-function getSpecialtiesList(){
+export function getSpecialtiesList(){
     const specialtiesList = document.getElementById("specialties-list") as HTMLTableSectionElement;
     specialtiesList.innerHTML = "";
     getAllSpecialties()
@@ -91,7 +91,7 @@ async function createNewSpeciality(){
 
         createSpeciality(newSpeciality)
         .then(response => {
-            if(response.status !== 200){
+            if(response.status !== 201){
                 throw Error(response.status.toString());
             }
             return response.json();

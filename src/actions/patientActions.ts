@@ -5,8 +5,7 @@ const API = 'http://localhost:8080/api/v1/patient/';
 
 export async function getExistentPatient(idSpeciality:number, identification:number) {
     const response:Response = await fetch(API + idSpeciality + '/' +identification);
-    const dataApi = await response.json();
-    return dataApi;
+    return response;
 }
 
 export async function createPatient(patient:IPatient){
