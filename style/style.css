@@ -177,6 +177,7 @@ html{
     letter-spacing: 1.5px;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .speciality p{
@@ -227,10 +228,6 @@ html{
     font-size: 1.8rem;
 }
 
-.form-create-speciality input:invalid, .form-create-speciality textarea:invalid{
-    border: 1.5px solid rgb(219, 98, 98);
-}
-
 .form-create-speciality button, .form-update-speciality button{
     background-color: var(--green);
     font-size: 1.5rem;
@@ -250,9 +247,10 @@ html{
     font-size: 1.4rem;
 }
 
-.messageCreate p , .messageUpdate p{
+.messageCreate p , .messageUpdate p, .deletedMessage p{
     margin-top: 10px;
     font-size: 2rem;
+    color: black;
 }
 
 footer{

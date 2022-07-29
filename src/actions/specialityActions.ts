@@ -46,6 +46,6 @@ export async function deleteSpeciality(id:number){
         },
         body: 'application/json'
     })
-    const dataApi:boolean = await response.json();
+    const dataApi = await response.json();
     return dataApi;
 }

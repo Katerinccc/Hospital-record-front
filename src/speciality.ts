@@ -31,6 +31,9 @@ function mainSpecialties(){
 function mainSpeciality(){
     getSpecialityById();
     addRef();
+
+    let deleteOption = document.getElementById("deleteSpeciality") as HTMLAnchorElement;
+    deleteOption.addEventListener("click", deleteExistentSpeciality);
 }
 
 function mainUpdate(){
@@ -97,7 +100,8 @@ async function createNewSpeciality(){
             const speciality:ISpeciality = specialityResponse.data;
             const resetButton = document.getElementById("reset") as HTMLButtonElement;
             resetButton.click();
-            const message = document.getElementById("messageCreate") as HTMLTableSectionElement;;
+            const message = document.getElementById("messageCreate") as HTMLTableSectionElement;
+            message.innerHTML = "";
             let p = document.createElement("p");  
             p.innerHTML = "Speciality " + speciality.name + " created successfully.";
             message.appendChild(p);
@@ -132,16 +136,24 @@ async function updateExistentSpeciality(){
             if(response.status !== 200){
                 throw Error(response.status.toString());
             }
+            window.location.href = 'speciality.html?id=' + id;
             return response.json();
         })
-        .then(updateResponse => {
-            const speciality:ISpeciality = updateResponse.data;
-            const resetButton = document.getElementById("reset") as HTMLButtonElement;
-            resetButton.click();
-            const message = document.getElementById("messageUpdate") as HTMLTableSectionElement;;
-            let p = document.createElement("p");  
-            p.innerHTML = "Speciality " + speciality.name + " updated successfully.";
-            message.appendChild(p);
-        })
     }
+}
+
+async function deleteExistentSpeciality(){
+    deleteSpeciality(id)
+    .then(dataApi => {
+        if (dataApi.data === true){
+            window.location.href = 'specialties.html';
+        }else if (dataApi.message === 'Deletion denied') {
+            const messageDelete = document.getElementById('deletedMessage') as HTMLParagraphElement;
+            messageDelete.innerHTML = "";
+            let p = document.createElement("p");  
+            p.innerHTML = "The specialty cannot be deleted because it has associated patients.";
+            p.style.color = '#B10D0D';
+            messageDelete.appendChild(p);
+        }
+    })
 }
