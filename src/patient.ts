@@ -1,3 +1,4 @@
+import { IIdPatient } from './models/IIdPatient';
 import { createPatient, 
     addNewAppointment, 
     deletePatient, 
@@ -10,9 +11,11 @@ import { ISpeciality } from './models/ISpeciality';
 declare global {
     interface Window {
         mainPatient:any;
+        addNewAppointmentCurrentPatient:any
     }
 }
 window.mainPatient = mainPatient;
+window.addNewAppointmentCurrentPatient = addNewAppointmentCurrentPatient;
 
 
 function mainPatient(){
@@ -62,8 +65,37 @@ async function searchExistentPatient(){
                 displayCreatePatient();
                 displayAddNewAppointmentButton();
             }
+            return response.json()
+        }).then(dataApi => {
+            console.log(dataApi);
+            localStorage.setItem('idPatient', JSON.stringify(dataApi.data));
         })
     }
+}
+
+function addNewAppointmentCurrentPatient(){
+    
+    let idCurrentPatient = localStorage.getItem('idPatient');
+    
+    const idPatient:IIdPatient = {
+        idPatient: Number(idCurrentPatient)
+    }
+
+    addNewAppointment(idPatient)
+    .then(dataApi =>{
+        const appointmentSection = document.getElementById('addAppointment') as HTMLTableSectionElement;
+        appointmentSection.innerHTML = "";
+        if(dataApi.message === 'OK'){
+            const p:HTMLParagraphElement = document.createElement('p');
+            const date:Date = new Date();
+            p.innerText = "New appointment added successfully with date: " + date.toDateString();
+            appointmentSection.append(p);
+        }else if(dataApi.data === false){
+            const p:HTMLParagraphElement = document.createElement('p');
+            p.innerText = "The appointment could not be created.";;
+            appointmentSection.append(p);
+        }
+    })
 }
 
 function displayCreatePatient(){
@@ -88,5 +120,5 @@ function messageNotFound(){
 
 function messageFound(){
     const messageExist = document.getElementById('messageResult') as HTMLParagraphElement;
-    messageExist.innerText = "The patient already exists. Select correspondent button you want to add a new appointment to this patient or register a new one:"
+    messageExist.innerText = "The patient already exists. \nSelect correspondent button you want to add a new appointment to this patient or register a new one:"
 }

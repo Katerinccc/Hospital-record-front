@@ -20,14 +20,15 @@ export async function createPatient(patient:IPatient){
 }
 
 export async function addNewAppointment(idPatient:IIdPatient){
-    const response:Response = await fetch(API, {
+    const response:Response = await fetch( (API + "appointment"), {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json' 
         },
         body: JSON.stringify(idPatient)
     })
-    return response;
+    const dataApi = await response.json();
+    return dataApi;
 }
 
 export async function deletePatient(id:number){

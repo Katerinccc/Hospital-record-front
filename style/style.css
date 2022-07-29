@@ -286,6 +286,71 @@ html{
 .patient-actions p{
     font-size: 1.8rem;
     color: var(--blue);
+    margin: 20px 0px 10px 30px;
+}
+
+.patient-actions button{
+    background-color: var(--blue);
+    color: white;
+    font-weight: bold;
+    height: 25px;
+    padding: 0px 10px;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 5px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.patient-actions button:hover{
+    background-color: var(--green);
+    box-shadow: 1px 2px 5px 2px var(--grey);
+}
+
+.create-patient-form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.create-patient-form h3{
+    color: var(--green);
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+}
+
+.create-patient-form ul{
+    list-style: none;
+}
+
+.create-patient-form li{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.create-patient-form form{
+    width: 450px;
+}
+
+.create-patient-form label{
+    width: 500px;
+    font-size: 1.8rem;
+}
+
+.create-patient-form input{
+    width: 150px;
+    height: 20px;
+}
+
+.create-patient-form button{
+    width: 150px;
+}
+
+.create-patient-form p{
+    margin-top: 0px;
 }
 
 footer{
