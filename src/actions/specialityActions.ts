@@ -35,8 +35,7 @@ export async function updateSpeciality(id:number, speciality:ISpeciality){
         },
         body: JSON.stringify(speciality)
     })
-    const dataApi:ISpeciality = await response.json();
-    return dataApi;
+    return response;
 }
 
 export async function deleteSpeciality(id:number){

@@ -1,3 +1,4 @@
+import { ISpeciality } from './models/ISpeciality';
 import { getAllSpecialties, 
     getSpeciality, 
     createSpeciality, 
@@ -5,16 +6,19 @@ import { getAllSpecialties,
     deleteSpeciality 
 } from "./actions/specialityActions.js";
 
-import { ISpeciality } from "../src/models/ISpeciality";
-
 declare global {
     interface Window {
         mainSpeciality:any;
         mainSpecialties:any;
+        mainUpdate:any
     }
 }
 window.mainSpeciality = mainSpeciality;
 window.mainSpecialties = mainSpecialties;
+window.mainUpdate = mainUpdate
+
+const params = new URLSearchParams(window.location.search);
+let id:number = Number(params.get('id'));
 
 function mainSpecialties(){
     createNewSpeciality();
@@ -26,6 +30,11 @@ function mainSpecialties(){
 
 function mainSpeciality(){
     getSpecialityById();
+    addRef();
+}
+
+function mainUpdate(){
+    updateExistentSpeciality();
 }
 
 function getSpecialtiesList(){
@@ -43,12 +52,9 @@ function getSpecialtiesList(){
     });
 }
 
-const params = new URLSearchParams(window.location.search);
-let id = params.get('id');
-
 function getSpecialityById(){
     const speciality = document.getElementById("speciality") as HTMLTableSectionElement;
-    getSpeciality(Number(id))
+    getSpeciality(id)
         .then(specialityReturn => {
             if(specialityReturn !== null){
                 let name = document.createElement("p");  
@@ -79,23 +85,63 @@ async function createNewSpeciality(){
             name: formData.get('name') as string,
             physician: formData.get('physician') as string
         }
-        
-    createSpeciality(newSpeciality)
-    .then(response => {
-        if(response.status !== 200){
-            throw Error(response.status.toString());
-        }
-        return response.json();
-    })
-    .then(specialityResponse => {
-        const speciality:ISpeciality = specialityResponse.data;
-        const resetButton = document.getElementById("reset") as HTMLButtonElement;
-        resetButton.click();
-        const message = document.getElementById("messageCreate") as HTMLTableSectionElement;;
-        let p = document.createElement("p");  
-        p.innerHTML = "Speciality " + speciality.name + " created successfully.";
-        message.appendChild(p);
-        getSpecialtiesList();
-    })
+
+        createSpeciality(newSpeciality)
+        .then(response => {
+            if(response.status !== 200){
+                throw Error(response.status.toString());
+            }
+            return response.json();
+        })
+        .then(specialityResponse => {
+            const speciality:ISpeciality = specialityResponse.data;
+            const resetButton = document.getElementById("reset") as HTMLButtonElement;
+            resetButton.click();
+            const message = document.getElementById("messageCreate") as HTMLTableSectionElement;;
+            let p = document.createElement("p");  
+            p.innerHTML = "Speciality " + speciality.name + " created successfully.";
+            message.appendChild(p);
+            getSpecialtiesList();
+        })
+    }
+}
+
+function addRef(){
+    const updatePage = document.getElementById("updatePage") as HTMLAnchorElement;
+    updatePage.href = "updateSpeciality.html?id=" + id;
+
+    // const deleteSpeciality = document.getElementById("deleteSpeciality") as HTMLAnchorElement;
+    // deleteSpeciality.href = "deleteSpeciality.html?id=" + id;
+}
+
+async function updateExistentSpeciality(){
+    const form = document.getElementById('formUpdate') as HTMLFormElement;
+
+    form.onsubmit = async function (event){
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        let specialityUpdate:ISpeciality = {
+            idSpeciality: null,
+            name: formData.get('name') as string,
+            physician: formData.get('physician') as string
+        } 
+        updateSpeciality(id, specialityUpdate)
+        .then(response => {
+            if(response.status !== 200){
+                throw Error(response.status.toString());
+            }
+            return response.json();
+        })
+        .then(updateResponse => {
+            const speciality:ISpeciality = updateResponse.data;
+            const resetButton = document.getElementById("reset") as HTMLButtonElement;
+            resetButton.click();
+            const message = document.getElementById("messageUpdate") as HTMLTableSectionElement;;
+            let p = document.createElement("p");  
+            p.innerHTML = "Speciality " + speciality.name + " updated successfully.";
+            message.appendChild(p);
+        })
     }
 }

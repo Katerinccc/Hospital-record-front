@@ -250,6 +250,11 @@ html{
     font-size: 1.4rem;
 }
 
+.messageCreate p , .messageUpdate p{
+    margin-top: 10px;
+    font-size: 2rem;
+}
+
 footer{
     height: 10vh;
     display: flex;
