@@ -193,13 +193,13 @@ html{
     margin-top: 30px;
 }
 
-.create-speciality h3, .update-speciality h3{
+.create-speciality h3, .update-speciality h3, .patients-list h3{
     font-size: 2.8rem;
     color: var(--green);
     margin-bottom: 20px;
 }
 
-.update-speciality{
+.update-speciality , .patients-list{
     margin-top: 30px;
     margin-left: 50px;
 }
@@ -273,6 +273,7 @@ html{
 
 .patient-search button{
     margin-top: 10px;
+    margin-bottom: 20px;
     width: 80px;
     height: 30px;
     border: none;
@@ -281,6 +282,13 @@ html{
     font-size: 2rem;
     cursor: pointer;
     border-radius: 10px;
+}
+
+.patient-search a{
+    font-size: 2.2rem;
+    text-decoration: none;
+    color: var(--blue);
+    font-weight: 700;
 }
 
 .patient-actions p{
@@ -309,8 +317,6 @@ html{
 }
 
 .create-patient-form{
-    display: flex;
-    flex-direction: column;
     margin-left: 30px;
     margin-top: 30px;
 }
@@ -332,25 +338,56 @@ html{
 }
 
 .create-patient-form form{
-    width: 450px;
+    width: 430px;
 }
 
 .create-patient-form label{
-    width: 500px;
+    width: 280px;
     font-size: 1.8rem;
 }
 
 .create-patient-form input{
     width: 150px;
     height: 20px;
+    font-size: 1.6rem;
 }
 
 .create-patient-form button{
     width: 150px;
+    margin-left: 0px;
 }
 
 .create-patient-form p{
     margin-top: 0px;
+}
+
+.patient-container{
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.info-container{
+    margin-right: 20px;
+}
+
+.info-container h4{
+    font-size: 1.8rem;
+    color: var(--blue);
+}
+
+.info-container p{
+    font-size: 1.6rem;
+}
+
+.button-container button{
+    width: 25px;
+    font-size: 1.7rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--green);
+    cursor: pointer;
 }
 
 footer{

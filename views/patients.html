@@ -8,11 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
+    <script type="module" src="../dist/patient.js"></script>
     <title>StClaire Hospital</title>
 </head>
-<body>
+<body onload="loadPatients()">
     <header class="header-go-back">
         <a href="../index.html"><span></span></a>
     </header>
+    <main>
+        <section class="section-go-back">
+            <a href="./patient.html"><span><p>Return</p></span></a>  
+        </section>
+        <section id="patientsList" class="patients-list">
+            <h3>Patients list</h3>
+        </section>
+    </main>
 </body>
 </html>

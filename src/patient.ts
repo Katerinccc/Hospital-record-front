@@ -1,29 +1,32 @@
 import { IPatient } from './models/IPatient';
 import { IIdPatient } from './models/IIdPatient';
+import { getAllSpecialties} from "./actions/specialityActions.js";
+import { ISpeciality } from './models/ISpeciality';
+import { IPatientResponse } from './models/IPatientResponse';
 import { createPatient, 
+    getAllPatients,
     addNewAppointment, 
     deletePatient, 
     getExistentPatient 
 } from "./actions/patientActions.js";
 
-import { getAllSpecialties} from "./actions/specialityActions.js";
-import { ISpeciality } from './models/ISpeciality';
-
 declare global {
     interface Window {
-        mainPatient:any;
+        mainPatient:any
         addNewAppointmentCurrentPatient:any
-        createNewPatient:any
+        displayCreatePatientForm:any
+        loadPatients:any
     }
 }
 window.mainPatient = mainPatient;
 window.addNewAppointmentCurrentPatient = addNewAppointmentCurrentPatient;
-window.createNewPatient = createNewPatient;
-
+window.displayCreatePatientForm = displayCreatePatientForm;
+window.loadPatients = loadPatients;
 
 function mainPatient(){
     fillSpecialtiesSelect();
     searchExistentPatient();
+    createNewPatient();
 }
 
 function fillSpecialtiesSelect(){
@@ -33,6 +36,10 @@ function fillSpecialtiesSelect(){
     });
 }
 
+function loadPatients(){
+    getPatientsList();
+}
+
 function addOptions(specialties:ISpeciality[]) {
     const select = document.getElementById("specialitySelect") as HTMLSelectElement;
 
@@ -40,6 +47,7 @@ function addOptions(specialties:ISpeciality[]) {
         let option = document.createElement('option');
         option.value = Number(speciality.idSpeciality).toString();
         option.text = speciality.name;
+        option.setAttribute("id", "idSpeciality" + Number(speciality.idSpeciality).toString())
         select.appendChild(option)
 
     } )
@@ -51,6 +59,7 @@ async function searchExistentPatient(){
 
     form.onsubmit = async function (event){
         event.preventDefault();
+        hideCreatePatientForm();
 
         const formData = new FormData(form);
 
@@ -70,10 +79,60 @@ async function searchExistentPatient(){
             }
             return response.json()
         }).then(dataApi => {
-            console.log(dataApi);
             localStorage.setItem('idPatient', JSON.stringify(dataApi.data));
         })
     }
+}
+
+export function getPatientsList(){
+    const patientsList = document.getElementById("patientsList") as HTMLTableSectionElement;
+    patientsList.innerHTML = "";
+    getAllPatients()
+        .then(patientsReturn => {
+            for (let index = 0; index < patientsReturn.length; index++) {
+                let element = patientsReturn[index];
+                createPatientDisplay(element);
+            }
+    });
+}
+
+function createPatientDisplay(patient:IPatientResponse){
+    const patientsList = document.getElementById("patientsList") as HTMLTableSectionElement;
+
+    const mainContainer:HTMLDivElement = document.createElement('div');
+    mainContainer.className = 'patient-container';
+    mainContainer.classList.add(`patient-${patient.idPatient}`);
+
+    const infoContainer:HTMLDivElement = document.createElement('div');
+    infoContainer.className = 'info-container'
+
+    const buttonContainer:HTMLDivElement = document.createElement('div');
+    buttonContainer.className = 'button-container'
+    
+    const h4:HTMLHeadElement = document.createElement('h4');
+    h4.innerText = patient.name;
+    
+    const specialityP:HTMLParagraphElement = document.createElement('p')
+    specialityP.innerText = "Speciality: " + patient.nameSpeciality;
+    
+    const identificationP:HTMLParagraphElement = document.createElement('p')
+    identificationP.innerText = "Identification: " + patient.identification.toString();
+
+    const appointmentP:HTMLParagraphElement = document.createElement('p')
+    appointmentP.innerText = "Identification: " + patient.numberAppointments.toString();
+
+    const ageP:HTMLParagraphElement = document.createElement('p')
+    ageP.innerText = "Age: " + patient.age.toString();
+
+    const deleteButton:HTMLButtonElement = document.createElement('button')
+    deleteButton.className = 'patient-delete-button'
+    deleteButton.innerText = 'X'
+    deleteButton.addEventListener('click', ()=> deleteSelectPatient(mainContainer));
+
+    infoContainer.append(h4, specialityP, identificationP, appointmentP, ageP);
+    buttonContainer.append(deleteButton);
+    mainContainer.append(infoContainer,buttonContainer);
+    patientsList.append(mainContainer);
 }
 
 function addNewAppointmentCurrentPatient(){
@@ -87,7 +146,6 @@ function addNewAppointmentCurrentPatient(){
     addNewAppointment(idPatient)
     .then(dataApi =>{
         const appointmentSection = document.getElementById('addAppointment') as HTMLTableSectionElement;
-        appointmentSection.innerHTML = "";
         if(dataApi.message === 'OK'){
             const p:HTMLParagraphElement = document.createElement('p');
             const date:Date = new Date();
@@ -110,34 +168,50 @@ async function createNewPatient(){
         const formData = new FormData(form);
 
         const selectValue = document.getElementById('specialitySelect') as HTMLSelectElement;
-        let specialityId:number = Number(selectValue.value);
+        const specialityId:number = Number(selectValue.value);
+        const specialityName = document.getElementById('idSpeciality'+specialityId.toString()) as HTMLOptionElement;
         
         let newPatient:IPatient = {
-            idPatient: null,
             idSpeciality: specialityId,
             name: formData.get('name') as string,
             identification: Number(formData.get('newIdentification')),
             age: Number(formData.get('age'))
         }
 
+        const message = document.getElementById("messagePatient") as HTMLTableSectionElement;
+
         createPatient(newPatient)
         .then(response => {
-            if(response.status !== 201){
-                throw Error(response.status.toString());
-            }
-            return response.json();
+            if(response.status === 400){
+                let pError = document.createElement("p");  
+                pError.innerHTML = "The patient could not be created. Please review the data and try again.";
+                pError.style.color = '#B10D0D';
+                message.appendChild(pError);
+            }else if (response.status === 201){
+                return response.json();
+            }            
         })
         .then(patientResponse => {
             const patient:IPatient = patientResponse.data;
             const resetButton = document.getElementById("reset") as HTMLButtonElement;
             resetButton.click();
-            const message = document.getElementById("messagePatient") as HTMLTableSectionElement;
             message.innerHTML = "";
             let p = document.createElement("p");  
-            p.innerHTML = "Patient " + patient.name + " created successfully.";
+            p.innerHTML = "Patient " + patient.name + " was created successfully in Speciality " + specialityName.textContent;
             message.appendChild(p);
         })
     }
+}
+
+function deleteSelectPatient(mainContainer:HTMLDivElement){
+    const id:number = Number(mainContainer.classList[1].split('-')[1]);
+    deletePatient(id)
+    .then(response => {
+        if(response.status === 200){
+            mainContainer.remove();
+        }
+    }).then(()=>loadPatients());
+
 }
 
 function displayCreatePatient(){
@@ -153,6 +227,9 @@ function displayAddNewAppointmentButton(){
 function displayCreatePatientForm(){
     const display = document.getElementById('createPatientForm') as HTMLTableSectionElement;
     display.classList.remove('display-none');
+
+    const input = document.getElementById('identification') as HTMLInputElement;
+    input.value = "";
 }
 
 function hideAddNewAppointmentButton(){
@@ -160,12 +237,17 @@ function hideAddNewAppointmentButton(){
     addAppointment.classList.add('display-none')
 }
 
+function hideCreatePatientForm(){
+    const display = document.getElementById('createPatientForm') as HTMLTableSectionElement;
+    display.classList.add('display-none');
+}
+
 function messageNotFound(){
     const messageNoExist = document.getElementById('messageResult') as HTMLParagraphElement;
-    messageNoExist.innerText = "Patient not found. Select button to create new patient."
+    messageNoExist.innerText = "Patient not found. Click button to create new patient."
 }
 
 function messageFound(){
     const messageExist = document.getElementById('messageResult') as HTMLParagraphElement;
-    messageExist.innerText = "The patient already exists. \nSelect correspondent button you want to add a new appointment to this patient or register a new one:"
+    messageExist.innerText = "The patient already exists. \nClick correspondent button to add a new appointment to this patient or register a new one:"
 }

@@ -22,8 +22,9 @@
         <section class="patient-search">
             <form id="formSearch" method="GET">
                 <ul>
+                    <label>Speciality</label>
                     <select id="specialitySelect">
-                        <option>Select speciality...</option>
+                        <option>Select...</option>
                     </select>
                     <li>
                         <label for="identification">Enter patient identification number: </label>
@@ -32,22 +33,23 @@
                     <button type="submit" id="searchPatient">SEARCH</button>
                 </ul>
             </form>
+            <a href="./patients.html">Get patients list -></a>
         </section>
         <section class="patient-actions">
             <p id="messageResult"></p>
             <section id="createPatient" class="display-none create-patient">
-                <button>Create new Patient</button>
+                <button type="button" onclick="displayCreatePatientForm()">Create new Patient</button>
             </section>
             <section id="addAppointment" class="display-none add-appointment">
                 <button id="addNewAppointment" type="button" onclick="addNewAppointmentCurrentPatient()">Add new Appointment to current patient</button>
             </section>
             <section class="display-none create-patient-form" id="createPatientForm">
                 <h3>Register new patient appointment:</h3>
-                <form id="formCreatePatient" action="">
+                <form id="formCreatePatient" method="POST">
                     <ul>
                         <li>
                             <label for="name">Enter patient name: </label>
-                            <input type="text" id="name" name="name" required autocomplete="off">
+                            <input type="text" id="name" name="name" required minlength="10" maxlength="45" autocomplete="off">
                         </li>
                         <li>
                             <label for="newIdentification">Enter patient identification number: </label>
@@ -55,10 +57,10 @@
                         </li>
                         <li>
                             <label for="age">Enter patient age: </label>
-                            <input type="number" id="age" name="age" required autocomplete="off">
+                            <input type="number" id="age" name="age" min="1" max="120" required autocomplete="off">
                         </li>
                         <li>
-                            <button type="submit" id="createSpeciality" onclick="createNewPatient()">SUBMIT</button>
+                            <button type="submit" id="createNewPatient">SUBMIT</button>
                             <button type="reset" id="reset">RESET</button>
                         </li>
                     </ul>
